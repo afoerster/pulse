@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.phdata.pams.example
+package io.phdata.pulse.example
 
 import java.net.InetAddress
 import org.apache.log4j.MDC
