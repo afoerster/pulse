@@ -48,10 +48,6 @@ object CollectionRollerMain extends LazyLogging {
       } finally {
         executorService.shutdown()
       }
-    } else if (parsedArgs.deleteApplications.supplied) {
-      deleteApplications(parsedArgs)
-    } else if (parsedArgs.listApplications.supplied) {
-      listApplications(parsedArgs)
     } else {
       val collectionRollerTask = new CollectionRollerTask(parsedArgs)
       collectionRollerTask.run()
@@ -72,40 +68,12 @@ object CollectionRollerMain extends LazyLogging {
     }
   }
 
-  private def listApplications(parsedArgs: CollectionRollerCliArgsParser): Unit = {
-    logger.info("Starting Collection Roller List App")
-
-    val collectionRoller = createCollectionRoller(parsedArgs.zkHosts())
-    try {
-      collectionRoller.collectionList().foreach(println)
-    } finally {
-      collectionRoller.close()
-    }
-    logger.info("Ending Collection Roller List App")
-  }
-
   private def createCollectionRoller(zookeeper: String) = {
     val now              = ZonedDateTime.now(ZoneOffset.UTC)
     val solr             = new CloudSolrServer(zookeeper)
     val solrService      = new SolrService(zookeeper, solr)
     val collectionRoller = new CollectionRoller(solrService, now)
     collectionRoller
-  }
-
-  private def deleteApplications(parsedArgs: CollectionRollerCliArgsParser): Unit = {
-    logger.info("starting Collection Roller Delete App")
-
-    logger.debug(s"parsed applications ${parsedArgs.deleteApplications}")
-
-    val collectionRoller = createCollectionRoller(parsedArgs.zkHosts())
-    try {
-      val applications =
-        parsedArgs.deleteApplications.toOption.get.split(',').toList
-      collectionRoller.deleteApplications(applications)
-    } finally {
-      collectionRoller.close()
-    }
-    logger.info("ending Collection Roller Delete App")
   }
 
   class CollectionRollerTask(parsedArgs: CollectionRollerCliArgsParser)
@@ -138,6 +106,7 @@ object CollectionRollerMain extends LazyLogging {
       } catch {
         case t: Throwable =>
           logger.error("Exception caught in Collection Roller task", t)
+          collectionRoller.close()
           System.exit(1)
       } finally {
         collectionRoller.close()

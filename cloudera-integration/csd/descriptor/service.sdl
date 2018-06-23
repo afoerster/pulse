@@ -190,7 +190,7 @@
         },
         {
           "name": "smtp.password",
-          "label": "smtp password",
+          "label": "SMTP password",
           "description": "SMTP server authentication password",
           "default": "",
           "required": "false",

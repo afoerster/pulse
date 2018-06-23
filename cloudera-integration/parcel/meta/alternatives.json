@@ -4,5 +4,11 @@
     "source": "conf",
     "priority": 10,
     "isDirectory": true
+  },
+  "pulse-cli": {
+    "destination": "/usr/bin/pulse",
+    "source": "bin/pulse",
+    "priority": 10,
+    "isDirectory": false
   }
 }

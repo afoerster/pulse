@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail
+export DEFAULT_CLASS_PATH="$PULSE_DIST/lib/*"
+export CLASS_PATH=${CLASS_PATH:-$DEFAULT_CLASS_PATH}
+
+java -cp "$CLASS_PATH" io.phdata.pulse.collectionroller.PulseCli $@
