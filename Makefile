@@ -1,7 +1,7 @@
 version = $(shell sh ./version)
 
 test:
-	sbt -mem 4096 test
+	sbt test
 
 dist: parcel csd
 	mkdir -p dist
@@ -33,10 +33,10 @@ clean:
 	$(MAKE) -C cloudera-integration/csd/ clean
 
 sbt-assembly:
-	sbt -mem 4096 assembly
+	sbt assembly
 
 sbt-compile:
-	sbt -mem 4096 compile
+	sbt compile
 
 csd: package
 	$(MAKE) -C cloudera-integration/csd/ csd
