@@ -6,5 +6,6 @@ pages:
   - log-appender.md
   - log-collector.md
   - alerting-engine.md
-  - csd.md
-  - parcel.md
+  - building.md
+  - contributing.md
+
