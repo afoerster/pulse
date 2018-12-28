@@ -1,7 +1,7 @@
 site_name: Pulse
 theme: readthedocs
 pages:
-  - overview.md
+  - index.md
   - collection-roller.md
   - log-appender.md
   - log-collector.md
